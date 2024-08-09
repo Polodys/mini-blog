@@ -18,15 +18,20 @@ class PostRepository
 
     public function getAll(): array
     {
-        $query = "SELECT * FROM post";
-        $statement = $this->connection->prepare($query);
-        $statement->execute();
-        $posts = [];
-        while ($row = $statement->fetch(\PDO::FETCH_ASSOC)) {
-            $post = new Post($row['post_id'], $row['title'], $row['content']);
-            $posts[] = $post;
-        }
+        try {
+            $query = "SELECT * FROM post";
+            $statement = $this->connection->prepare($query);
+            $statement->execute();
+            $posts = [];
+            while ($row = $statement->fetch(\PDO::FETCH_ASSOC)) {
+                $post = new Post($row['post_id'], $row['title'], $row['content']);
+                $posts[] = $post;
+            }
 
-        return $posts;
+            return $posts;
+        } catch (\PDOException $e) {
+            error_log("Erreur lors de la récupération des billets : " . $e->getMessage(), 3, 'src/logs/error.log');
+            throw new \Exception("Erreur lors de la récupération des billets.");
+        }
     }
 }
