@@ -20,4 +20,10 @@ class PostController
         $posts = $this->PostRepository->getAll();
         require 'src/views/homepage.php';
     }
+
+    public function showOnePost(int $id)
+    {
+        $post = $this->PostRepository->getOnePost($id);
+        require 'src/views/show-one-post.php';
+    }
 }

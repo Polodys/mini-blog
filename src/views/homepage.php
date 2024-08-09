@@ -11,7 +11,7 @@
 <ul>
     <?php foreach ($posts as $post): ?>
         <li>
-            <a href=""><?= htmlspecialchars($post->getTitle()) ?></a>
+            <a href="index.php?action=show-one-post&id=<?= htmlspecialchars($post->getId()); ?>"><?= htmlspecialchars($post->getTitle()) ?></a> <!-- Using htmlspecialchars for the id is a priori superfluous, because it's normally an integer from the database ; but I've chosen to systematically process all dynamic datas in this app --> 
         </li>
     <?php endforeach ?>
 </ul>

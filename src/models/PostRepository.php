@@ -34,4 +34,21 @@ class PostRepository
             throw new \Exception("Erreur lors de la récupération des billets.");
         }
     }
+
+    public function getOnePost(int $id): Post
+    {
+        try {
+            $query = "SELECT * FROM post WHERE post_id = :post_id";
+            $statement = $this->connection->prepare($query);
+            $statement->execute(['post_id' => $id]);
+
+            $row = $statement->fetch(\PDO::FETCH_ASSOC);
+            $post = new Post($row['post_id'], $row['title'], $row['content']);
+
+            return $post;
+        } catch (\PDOException $e) {
+            error_log("Erreur lors de la récupération d'un billet : " . $e->getMessage(), 3, 'src/logs/error.log');
+            throw new \Exception("Erreur lors de la récupération d'un billet.");
+        }
+    }
 }
