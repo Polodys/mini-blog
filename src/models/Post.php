@@ -2,7 +2,7 @@
 
 namespace Application\Models;
 
-class ModelPost
+class Post
 {
     private ?int $id;
     private string $title;

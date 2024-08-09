@@ -4,20 +4,20 @@ namespace Application\Controllers;
 
 require_once 'src/models/PostRepository.php';
 
-use Application\Models\ModelPostRepository;
+use Application\Models\PostRepository;
 
 class PostController
 {
-    private ModelPostRepository $modelPostRepository;
+    private PostRepository $PostRepository;
 
     public function __construct()
     {
-        $this->modelPostRepository = new ModelPostRepository();
+        $this->PostRepository = new PostRepository();
     }
 
     public function index()
     {
-        $posts = $this->modelPostRepository->getAll();
+        $posts = $this->PostRepository->getAll();
         require 'src/views/homepage.php';
     }
 }

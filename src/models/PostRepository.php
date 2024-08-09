@@ -7,7 +7,7 @@ require_once 'src\models\Post.php';
 
 use Application\Lib\Database;
 
-class ModelPostRepository
+class PostRepository
 {
     private \PDO $connection;
 
@@ -23,7 +23,7 @@ class ModelPostRepository
         $statement->execute();
         $posts = [];
         while ($row = $statement->fetch(\PDO::FETCH_ASSOC)) {
-            $post = new ModelPost($row['id'], $row['title'], $row['content']);
+            $post = new Post($row['post_id'], $row['title'], $row['content']);
             $posts[] = $post;
         }
 
