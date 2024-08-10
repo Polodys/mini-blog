@@ -3,15 +3,15 @@
 session_start();
 
 require_once 'src/controllers/PostController.php'; // ou require_once(__DIR__ . '/src/controllers/PostController.php'); ?
-require_once 'src/controllers/AuthController.php';
+require_once 'src/controllers/AuthenticationController.php';
 require_once 'src/controllers/ErrorController.php';
 
 use Application\Controllers\PostController;
-use Application\Controllers\AuthController;
+use Application\Controllers\AuthenticationController;
 use Application\Controllers\ErrorController;
 
 // $postController = new PostController(); // Pas forcément le plus efficace de mettre ça là : à revoir
-// $authController = new AuthController(); // Pas forcément le plus efficace de mettre ça là : à revoir
+// $authenticationController = new AuthenticationController(); // Pas forcément le plus efficace de mettre ça là : à revoir
 
 function validateId(string $id)
 {
@@ -28,24 +28,24 @@ try {
     if (isset($_GET['action'])) {
         switch ($_GET['action']) {
             case 'register':
-                $authController = new AuthController();
+                $authenticationController = new AuthenticationController();
                 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                    $authController->register($_POST['email'], $_POST['username'], $_POST['password']);
+                    $authenticationController->register($_POST['email'], $_POST['pseudonym'], $_POST['password']);
                 } else {
-                    $authController->registerForm();
+                    $authenticationController->registerForm();
                 }
                 break;
             case 'login':
-                $authController = new AuthController();
+                $authenticationController = new AuthenticationController();
                 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                    $authController->login($_POST['identifier'], $_POST['password']);
+                    $authenticationController->login($_POST['identifier'], $_POST['password']);
                 } else {
-                    $authController->loginForm();
+                    $authenticationController->loginForm();
                 }
                 break;
             case 'logout':
-                $authController = new AuthController();
-                $authController->logout();
+                $authenticationController = new AuthenticationController();
+                $authenticationController->logout();
                 break;
             case 'show-one-post':
                 $id = validateId($_GET['id']);

@@ -3,11 +3,11 @@
 namespace Application\Models;
 
 require_once 'src\lib\Database.php';
-require_once 'src\models\User.php';
+require_once 'src\models\Author.php';
 
 use Application\Lib\Database;
 
-class UserRepository
+class AuthorRepository
 {
     private \PDO $connection;
 
@@ -16,28 +16,28 @@ class UserRepository
         $this->connection = Database::getConnection();
     }
 
-    // Is the email or username already taken ? (I don't want 2 users to have the same email or username)
-    public function isEmailOrUsernameTaken(string $email, string $username): bool
+    // Is the email or pseudonym already taken ? (I don't want 2 authors to have the same email or pseudonym)
+    public function isEmailOrPseudonymTaken(string $email, string $pseudonym): bool
     {
-        $query = "SELECT COUNT(*) FROM user WHERE email = :email OR username = :username";
+        $query = "SELECT COUNT(*) FROM author WHERE email = :email OR pseudonym = :pseudonym";
         $statement = $this->connection->prepare($query);
-        $statement->execute(['email' => $email, 'username' => $username]);
-        return $statement->fetchColumn() > 0; // returns true if the candidate email or username is already in the 'user' table
+        $statement->execute(['email' => $email, 'pseudonym' => $pseudonym]);
+        return $statement->fetchColumn() > 0; // returns true if the candidate email or pseudonym is already in the 'author' table
     }
 
-    public function createUser(string $email, string $username, string $password): bool
+    public function createAuthor(string $email, string $pseudonym, string $password): bool
     {
         try {
-            if ($this->isEmailOrUsernameTaken($email, $username)) {
-                return false; // returns false if the candidate email or username is already in the 'user' table
+            if ($this->isEmailOrPseudonymTaken($email, $pseudonym)) {
+                return false; // returns false if the candidate email or pseudonym is already in the 'author' table
             }
 
             $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
-            $query = "INSERT INTO user (email, username, password) VALUES (:email, :username, :password)";
+            $query = "INSERT INTO author (email, pseudonym, password) VALUES (:email, :pseudonym, :password)";
             $statement = $this->connection->prepare($query);
             return $statement->execute([
                 'email' => $email,
-                'username' => $username,
+                'pseudonym' => $pseudonym,
                 'password' => $hashedPassword
             ]);
         } catch (\PDOException $e) {
@@ -46,16 +46,16 @@ class UserRepository
         }
     }
 
-    public function getUserByEmailOrUsername(string $identifier): ?User
+    public function getAuthorByEmailOrPseudonym(string $identifier): ?Author
     {
         try {
-            $query = "SELECT * FROM user WHERE email = :identifier OR username = :identifier";
+            $query = "SELECT * FROM author WHERE email = :identifier OR pseudonym = :identifier";
             $statement = $this->connection->prepare($query);
             $statement->execute(['identifier' => $identifier]);
             $row = $statement->fetch(\PDO::FETCH_ASSOC);
 
             if ($row) {
-                return new User($row['user_id'], $row['email'], $row['username'], $row['password']);
+                return new Author($row['author_id'], $row['email'], $row['pseudonym'], $row['password']);
             }
             return null;
         } catch (\PDOException $e) {

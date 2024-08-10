@@ -2,23 +2,23 @@
 
 namespace Application\Controllers;
 
-require_once 'src/models/UserRepository.php';
+require_once 'src/models/AuthorRepository.php';
 
-use Application\Models\UserRepository;
+use Application\Models\AuthorRepository;
 
-class AuthController
+class AuthenticationController
 {
-    private UserRepository $userRepository;
+    private AuthorRepository $authorRepository;
 
     public function __construct()
     {
-        $this->userRepository = new UserRepository();
+        $this->authorRepository = new AuthorRepository();
     }
 
-    public function register($email, $username, $password)
+    public function register($email, $pseudonym, $password)
     {
         try {
-            if ($this->userRepository->createUser($email, $username, $password)) {
+            if ($this->authorRepository->createAuthor($email, $pseudonym, $password)) {
                 header('Location: index.php?action=login');
             } else {
                 $errorMessage = "L'email ou le pseudo est déjà utilisé.";
@@ -37,11 +37,11 @@ class AuthController
 
     public function login($identifier, $password)
     {
-        $user = $this->userRepository->getUserByEmailOrUsername($identifier);
+        $author = $this->authorRepository->getAuthorByEmailOrPseudonym($identifier);
 
-        if ($user && password_verify($password, $user->getPassword())) {
-            $_SESSION['user_id'] = $user->getId();
-            $_SESSION['username'] = $user->getUsername();
+        if ($author && password_verify($password, $author->getPassword())) {
+            $_SESSION['author_id'] = $author->getId();
+            $_SESSION['pseudonym'] = $author->getPseudonym();
             header('Location: index.php');
         } else {
             $errorMessage = "Identifiants incorrects.";

@@ -2,18 +2,18 @@
 
 namespace Application\Models;
 
-class User
+class Author
 {
     private ?int $id;
     private string $email;
-    private string $username;
+    private string $pseudonym;
     private string $password;
 
-    public function __construct(?int $id, string $email, string $username, string $password)
+    public function __construct(?int $id, string $email, string $pseudonym, string $password)
     {
         $this->id = $id;
         $this->email = $email;
-        $this->username = $username;
+        $this->pseudonym = $pseudonym;
         $this->password = $password;
     }
 
@@ -27,9 +27,9 @@ class User
         return $this->email;
     }
 
-    public function getUsername(): string
+    public function getPseudonym(): string
     {
-        return $this->username;
+        return $this->pseudonym;
     }
 
     public function getPassword(): string
