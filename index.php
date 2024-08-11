@@ -2,16 +2,13 @@
 
 session_start();
 
-require_once 'src/controllers/PostController.php'; // ou require_once(__DIR__ . '/src/controllers/PostController.php'); ?
+require_once 'src/controllers/PostController.php'; // or require_once(__DIR__ . '/src/controllers/PostController.php');
 require_once 'src/controllers/AuthenticationController.php';
 require_once 'src/controllers/ErrorController.php';
 
 use Application\Controllers\PostController;
 use Application\Controllers\AuthenticationController;
 use Application\Controllers\ErrorController;
-
-// $postController = new PostController(); // Pas forcément le plus efficace de mettre ça là : à revoir
-// $authenticationController = new AuthenticationController(); // Pas forcément le plus efficace de mettre ça là : à revoir
 
 function validateId(string $id)
 {
@@ -47,10 +44,32 @@ try {
                 $authenticationController = new AuthenticationController();
                 $authenticationController->logout();
                 break;
+            case 'create-post-form':
+                (new PostController())->createPostForm();
+                break;
+            case 'create-post':
+                $postController = new PostController();
+                if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                    $postController->createPost($_POST['title'], $_POST['content'], $_SESSION['author_id']);
+                } else {
+                    $postController->createPostForm();
+                }
+                break;
             case 'show-one-post':
                 $id = validateId($_GET['id']);
-                $postController = new PostController();
-                $postController->showOnePost($id);
+                (new PostController())->showOnePost($id);
+                break;
+            case 'update-post-form':
+                $id = validateId($_GET['id']);
+                (new PostController())->updatePostForm($id);
+                break;
+            case 'update-post':
+                $id = validateId($_GET['id']);
+                (new PostController())->updatePost($id, $_POST['title'], $_POST['content']);
+                break;
+            case 'delete-post':
+                $id = validateId($_GET['id']);
+                (new PostController())->deletePost($id);
                 break;
             default:
                 echo "<h1>En cours de construction</h1>";
