@@ -27,7 +27,7 @@ try {
             case 'register':
                 $authenticationController = new AuthenticationController();
                 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                    $authenticationController->register($_POST['email'], $_POST['pseudonym'], $_POST['password']);
+                    $authenticationController->register($_POST);
                 } else {
                     $authenticationController->registerForm();
                 }
@@ -35,7 +35,7 @@ try {
             case 'login':
                 $authenticationController = new AuthenticationController();
                 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                    $authenticationController->login($_POST['identifier'], $_POST['password']);
+                    $authenticationController->login($_POST);
                 } else {
                     $authenticationController->loginForm();
                 }
@@ -50,7 +50,7 @@ try {
             case 'create-post':
                 $postController = new PostController();
                 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                    $postController->createPost($_POST['title'], $_POST['content'], $_SESSION['author_id']);
+                    $postController->createPost($_POST);
                 } else {
                     $postController->createPostForm();
                 }
@@ -65,7 +65,7 @@ try {
                 break;
             case 'update-post':
                 $id = validateId($_GET['id']);
-                (new PostController())->updatePost($id, $_POST['title'], $_POST['content']);
+                (new PostController())->updatePost($id, $_POST);
                 break;
             case 'delete-post':
                 $id = validateId($_GET['id']);

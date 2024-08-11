@@ -12,6 +12,8 @@ class ErrorController
         error_log($formattedErrorMessage, 3, 'src/logs/error.log');
         
         $userErrorMessage = "Une erreur interne est survenue. Veuillez réessayer plus tard.";
+
+        // $userErrorMessage = $errorMessage;
         
         require 'src/views/error.php';
     }

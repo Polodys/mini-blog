@@ -22,8 +22,24 @@ class PostController
         require 'src/views/posts/create-post-form.php';
     }
 
-    public function createPost($title, $content, $authorId)
+    public function createPost(array $data)
     {
+        // 1- Datas validation
+        $title = trim($data['title']);
+        $content = trim($data['content']);
+        $authorId = $_SESSION['author_id'] ?? null;
+
+        if (empty($title) || empty($content)) {
+            $errorMessage = "Le titre et le contenu ne peuvent pas être vides.";
+            require 'src/views/posts/create-post-form.php';
+            return;
+        }
+
+        if (empty($authorId)) {
+            throw new \Exception("Vous devez être connecté pour créer un billet.");
+        }
+
+        // 2- Creation of the new post
         try {
             $post = new Post(null, $title, $content, $authorId, null);
             $this->postRepository->createPost($post);
@@ -52,16 +68,30 @@ class PostController
         require 'src/views/posts/update-post-form.php';
     }
 
-    public function updatePost(int $id, string $title, string $content)
+    public function updatePost(int $id, array $data)
     {
-        // Only the author of a post can modify it : here, an exception is thrown if the connected author is not the author of the post
+        // 1- Datas validation
+        $title = trim($data['title']);
+        $content = trim($data['content']);
         $post = $this->postRepository->getOnePost($id);
+
+        if (empty($title) || empty($content)) {
+            throw new \Exception("Le titre et le contenu ne peuvent pas être vides.");
+        }
+
+        // Only the author of a post can modify it : here, an exception is thrown if the connected author is not the author of the post
         if ((int) $_SESSION['author_id'] !== (int) $post->getAuthorId()) {
             throw new \Exception("Vous n'avez pas les droits pour modifier ce billet.");
         }
-        
-        $post = $this->postRepository->updatePost($id, $title, $content);
-        header('Location: index.php?action=show-one-post&id=' . $id);
+
+        // 2- Updating of the post
+        try {
+            $post = $this->postRepository->updatePost($id, $title, $content);
+            header('Location: index.php?action=show-one-post&id=' . $id);
+        } catch (\Exception $e) {
+            $errorMessage = "Une erreur est survenue lors de la mise à jour du billet.";
+            require 'src\views\posts\update-post-form.php';
+        }
     }
 
     public function deletePost(int $id)
@@ -72,7 +102,11 @@ class PostController
             throw new \Exception("Vous n'avez pas les droits pour supprimer ce billet.");
         }
 
-        $this->postRepository->deletePost($id);
-        header('Location: index.php');
+        try {
+            $this->postRepository->deletePost($id);
+            header('Location: index.php');
+        } catch (\Exception $e) {
+            throw new \Exception("Erreur lors de la suppression du billet.");
+        }
     }
 }

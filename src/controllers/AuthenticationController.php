@@ -15,8 +15,27 @@ class AuthenticationController
         $this->authorRepository = new AuthorRepository();
     }
 
-    public function register($email, $pseudonym, $password)
+    public function register(array $data)
     {
+        // 1- Datas validation
+        $email = filter_var($data['email'], FILTER_VALIDATE_EMAIL);
+        $pseudonym = trim($data['pseudonym']);
+        $password = $data['password'];
+
+        if (!$email) {
+            throw new \Exception("Email invalide.");
+        }
+
+        if (empty($pseudonym)) {
+            throw new \Exception("Le pseudonyme ne peut pas être vide.");
+        }
+
+        // ATTENTION CI-DESSOUS : password fixé à 3 pour faciliter les tests : à remonter à 8 ou plus
+        if (strlen($password) < 3) {
+            throw new \Exception("Le mot de passe doit contenir au moins 3 caractères.");
+        }
+
+        // 2- Creation of a new author
         try {
             if ($this->authorRepository->createAuthor($email, $pseudonym, $password)) {
                 header('Location: index.php?action=login');
@@ -35,8 +54,17 @@ class AuthenticationController
         require 'src/views/register.php';
     }
 
-    public function login($identifier, $password)
+    public function login(array $data)
     {
+        $identifier = trim($data['identifier']);
+        $password = $data['password'];
+
+        if (empty($identifier) || empty($password)) {
+            $errorMessage = "Identifiants incorrects.";
+            require 'src/views/login.php';
+            return;
+        }
+
         $author = $this->authorRepository->getAuthorByEmailOrPseudonym($identifier);
 
         if ($author && password_verify($password, $author->getPassword())) {
