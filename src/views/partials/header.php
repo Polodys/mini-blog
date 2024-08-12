@@ -6,11 +6,11 @@
                 <a href="index.php">Accueil</a>
             </li>
 
-            <?php if (isset($_SESSION['pseudonym'])): ?>
+            <?php if (isset($_SESSION['authorPseudonym'])): ?>
                 <li>
                     <a href="index.php?action=create-post-form">Nouvel article</a>
                 </li>
-                <li>Bienvenue <?= htmlspecialchars($_SESSION['pseudonym']) ?></li>
+                <li>Bienvenue <?= htmlspecialchars($_SESSION['authorPseudonym']) ?></li>
                 <li>
                     <a href="index.php?action=logout">Déconnexion</a>
                 </li>

@@ -77,7 +77,7 @@ try {
         }
     } else {
         $postController = new PostController();
-        $postController->index();
+        $postController->homepage();
     }
 } catch (Exception $e) {
     $errorController = new ErrorController();

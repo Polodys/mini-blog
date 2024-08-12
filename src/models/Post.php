@@ -8,14 +8,18 @@ class Post
     private string $title;
     private string $content;
     private string $authorId;
+    private ?string $authorEmail;
+    private ?string $authorPseudonym;
     private ?string $creationDate;
 
-    public function __construct(?int $id, string $title, string $content, string $authorId, ?string $creationDate)
+    public function __construct(?int $id, string $title, string $content, string $authorId, ?string $authorEmail, ?string $authorPseudonym, ?string $creationDate)
     {
         $this->id = $id;
         $this->title = $title;
         $this->content = $content;
         $this->authorId = $authorId;
+        $this->authorEmail = $authorEmail;
+        $this->authorPseudonym = $authorPseudonym;
         $this->creationDate = $creationDate;
     }
 
@@ -37,6 +41,16 @@ class Post
     public function getAuthorId()
     {
         return $this->authorId;
+    }
+
+    public function getAuthorEmail()
+    {
+        return $this->authorEmail;
+    }
+
+    public function getAuthorPseudonym()
+    {
+        return $this->authorPseudonym;
     }
 
     public function getCreationDate()

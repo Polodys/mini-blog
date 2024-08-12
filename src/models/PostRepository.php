@@ -35,12 +35,18 @@ class PostRepository
     public function getAllPosts(): array
     {
         try {
-            $query = "SELECT * FROM post";
+            // $query = "SELECT * FROM post";
+            $query =
+                "SELECT post_id, title, content, post.author_id, email, pseudonym, DATE_FORMAT(creation_date, '%d/%m/%Y') AS french_format_creation_date
+                FROM post
+                INNER JOIN author
+                ON post.author_id = author.author_id
+                ORDER BY creation_date DESC";
             $statement = $this->connection->prepare($query);
             $statement->execute();
             $posts = [];
             while ($row = $statement->fetch(\PDO::FETCH_ASSOC)) {
-                $post = new Post($row['post_id'], $row['title'], $row['content'], $row['author_id'], $row['creation_date']);
+                $post = new Post($row['post_id'], $row['title'], $row['content'], $row['author_id'], $row['email'], $row['pseudonym'], $row['french_format_creation_date']);
                 $posts[] = $post;
             }
 
@@ -54,12 +60,18 @@ class PostRepository
     public function getOnePost(int $id): Post
     {
         try {
-            $query = "SELECT * FROM post WHERE post_id = :post_id";
+            // $query = "SELECT * FROM post WHERE post_id = :post_id";
+            $query =
+                "SELECT post_id, title, content, post.author_id, email, pseudonym, DATE_FORMAT(creation_date, '%d/%m/%Y') AS french_format_creation_date
+                FROM post
+                INNER JOIN author
+                ON post.author_id = author.author_id
+                WHERE post_id = :post_id";
             $statement = $this->connection->prepare($query);
             $statement->execute(['post_id' => $id]);
 
             $row = $statement->fetch(\PDO::FETCH_ASSOC);
-            $post = new Post($row['post_id'], $row['title'], $row['content'], $row['author_id'], $row['creation_date']);
+            $post = new Post($row['post_id'], $row['title'], $row['content'], $row['author_id'], $row['email'], $row['pseudonym'], $row['french_format_creation_date']);
 
             return $post;
         } catch (\PDOException $e) {

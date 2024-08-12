@@ -27,7 +27,9 @@ class PostController
         // 1- Datas validation
         $title = trim($data['title']);
         $content = trim($data['content']);
-        $authorId = $_SESSION['author_id'] ?? null;
+        $authorId = $_SESSION['authorId'] ?? null;
+        $authorEmail = $_SESSION['authorEmail'] ?? null;
+        $authorPseudonym = $_SESSION['authorPseudonym'] ?? null;
 
         if (empty($title) || empty($content)) {
             $errorMessage = "Le titre et le contenu ne peuvent pas être vides.";
@@ -41,7 +43,7 @@ class PostController
 
         // 2- Creation of the new post
         try {
-            $post = new Post(null, $title, $content, $authorId, null);
+            $post = new Post(null, $title, $content, $authorId, $authorEmail, $authorPseudonym, null);
             $this->postRepository->createPost($post);
             header('Location: index.php');
         } catch (\Exception $e) {
@@ -50,9 +52,10 @@ class PostController
         }
     }
 
-    public function index()
+    public function homepage()
     {
         $posts = $this->postRepository->getAllPosts();
+        // echo "<pre>";var_dump($posts);die;
         require 'src/views/homepage.php';
     }
 
@@ -80,7 +83,7 @@ class PostController
         }
 
         // Only the author of a post can modify it : here, an exception is thrown if the connected author is not the author of the post
-        if ((int) $_SESSION['author_id'] !== (int) $post->getAuthorId()) {
+        if ((int) $_SESSION['authorId'] !== (int) $post->getAuthorId()) {
             throw new \Exception("Vous n'avez pas les droits pour modifier ce billet.");
         }
 
@@ -98,7 +101,7 @@ class PostController
     {
         // Only the author of a post can delete it : here, an exception is thrown if the connected author is not the author of the post
         $post = $this->postRepository->getOnePost($id);
-        if ((int) $_SESSION['author_id'] !== (int) $post->getAuthorId()) {
+        if ((int) $_SESSION['authorId'] !== (int) $post->getAuthorId()) {
             throw new \Exception("Vous n'avez pas les droits pour supprimer ce billet.");
         }
 

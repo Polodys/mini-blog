@@ -28,3 +28,16 @@ La page ne peut pas s'afficher : identifiant non valide.
 La page ne peut pas s'afficher : identifiant non valide.
 La page ne peut pas s'afficher : identifiant non valide.
 Le mot de passe doit contenir au moins 3 caractères.
+Erreur lors de la récupération d'un billet : SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokensErreur lors de la récupération d'un billet.
+Erreur lors de la récupération d'un billet : SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokensErreur lors de la récupération d'un billet.
+Erreur lors de la récupération d'un billet : SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokensErreur lors de la récupération d'un billet.
+Erreur lors de la récupération d'un billet : SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokensErreur lors de la récupération d'un billet.
+Erreur lors de la récupération des billets : SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'AS french_format_creation_date
+                FROM post
+                IN...' at line 1Erreur lors de la récupération des billets.
+Erreur lors de la récupération des billets : SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'AS french_format_creation_date
+                FROM post
+                IN...' at line 1Erreur lors de la récupération des billets.
+Erreur lors de la récupération des billets : SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'AS french_format_creation_date
+                FROM post
+                IN...' at line 1Erreur lors de la récupération des billets.

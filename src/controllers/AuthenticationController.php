@@ -68,8 +68,9 @@ class AuthenticationController
         $author = $this->authorRepository->getAuthorByEmailOrPseudonym($identifier);
 
         if ($author && password_verify($password, $author->getPassword())) {
-            $_SESSION['author_id'] = $author->getId();
-            $_SESSION['pseudonym'] = $author->getPseudonym();
+            $_SESSION['authorId'] = $author->getId();
+            $_SESSION['authorEmail'] = $author->getEmail();
+            $_SESSION['authorPseudonym'] = $author->getPseudonym();
             header('Location: index.php');
         } else {
             $errorMessage = "Identifiants incorrects.";
