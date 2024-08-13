@@ -2,6 +2,8 @@
 
 namespace Application\Lib;
 
+use Application\Controllers\ErrorController;
+
 class Database
 {
     private static ?\PDO $connection = null;
@@ -20,11 +22,12 @@ class Database
                     ]
                 );
             } catch (\PDOException $e) {
-                error_log('Erreur de connexion à la base de données : ' . $e->getMessage(), 3, 'src/logs/error.log');
-                throw new \Exception("Impossible de se connecter à la base de données. Veuillez réessayer plus tard.");
+                $errorController = new ErrorController();
+                $errorController->errorHandler($e);
+                exit;
             }
         }
-    
+
         return self::$connection;
     }
 }

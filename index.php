@@ -2,6 +2,8 @@
 
 session_start();
 
+// ini_set('display_errors', 0); // In production, choose 0 ; in developpement, choose 1 (enables errors to be displayed on screen)
+
 require_once 'src/controllers/PostController.php'; // or require_once(__DIR__ . '/src/controllers/PostController.php');
 require_once 'src/controllers/AuthenticationController.php';
 require_once 'src/controllers/ErrorController.php';
@@ -12,7 +14,7 @@ use Application\Controllers\ErrorController;
 
 function validateId(string $id)
 {
-    $id = isset($id) ? (int) $id : 0;
+    $id = isset($id) ? (int) $id : 0; 
 
     if ($id > 0) {
         return $id;
@@ -72,7 +74,7 @@ try {
                 (new PostController())->deletePost($id);
                 break;
             default:
-                echo "<h1>En cours de construction</h1>";
+                throw new Exception('Page non trouvée', 404);
                 break;
         }
     } else {
@@ -81,6 +83,5 @@ try {
     }
 } catch (Exception $e) {
     $errorController = new ErrorController();
-    $errorController->error($e->getMessage());
-    // header('Location: index.php?action=error');
+    $errorController->errorHandler($e);
 }

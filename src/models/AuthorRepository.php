@@ -19,10 +19,14 @@ class AuthorRepository
     // Is the email or pseudonym already taken ? (I don't want 2 authors to have the same email or pseudonym)
     public function isEmailOrPseudonymTaken(string $email, string $pseudonym): bool
     {
-        $query = "SELECT COUNT(*) FROM author WHERE email = :email OR pseudonym = :pseudonym";
-        $statement = $this->connection->prepare($query);
-        $statement->execute(['email' => $email, 'pseudonym' => $pseudonym]);
-        return $statement->fetchColumn() > 0; // returns true if the candidate email or pseudonym is already in the 'author' table
+        try {
+            $query = "SELECT COUNT(*) FROM author WHERE email = :email OR pseudonym = :pseudonym";
+            $statement = $this->connection->prepare($query);
+            $statement->execute(['email' => $email, 'pseudonym' => $pseudonym]);
+            return $statement->fetchColumn() > 0; // returns true if the candidate email or pseudonym is already in the 'author' table
+        } catch (\PDOException $e) {
+            throw new \Exception("Erreur lors de la création d'un auteur.", 0, $e);
+        }
     }
 
     public function createAuthor(string $email, string $pseudonym, string $password): bool
@@ -41,8 +45,7 @@ class AuthorRepository
                 'password' => $hashedPassword
             ]);
         } catch (\PDOException $e) {
-            error_log("Erreur lors de la création de l'utilisateur : " . $e->getMessage(), 3, 'src/logs/error.log');
-            throw new \Exception("Erreur lors de la création de l'utilisateur.");
+            throw new \Exception("Erreur lors de la création d'un auteur.", 0, $e);
         }
     }
 
@@ -56,11 +59,11 @@ class AuthorRepository
 
             if ($row) {
                 return new Author($row['author_id'], $row['email'], $row['pseudonym'], $row['password']);
+            } else {
+                return null;
             }
-            return null;
         } catch (\PDOException $e) {
-            error_log("Erreur lors de la récupération de l'utilisateur par son email ou son pseudo : " . $e->getMessage(), 3, 'src/logs/error.log');
-            throw new \Exception("Erreur lors de la récupération de l'utilisateur.");
+            throw new \Exception("Erreur lors de la récupération d'un auteur.", 0, $e);
         }
     }
 }

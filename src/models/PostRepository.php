@@ -27,8 +27,7 @@ class PostRepository
                 'author_id' => $post->getAuthorId(),
             ]);
         } catch (\PDOException $e) {
-            error_log("Erreur lors de la création du billet : " . $e->getMessage(), 3, 'src/logs/error.log');
-            throw new \Exception("Erreur lors de la création du billet.");
+            throw new \Exception("Erreur lors de la création d'un billet.", 0, $e);
         }
     }
 
@@ -52,8 +51,7 @@ class PostRepository
 
             return $posts;
         } catch (\PDOException $e) {
-            error_log("Erreur lors de la récupération des billets : " . $e->getMessage(), 3, 'src/logs/error.log');
-            throw new \Exception("Erreur lors de la récupération des billets.");
+            throw new \Exception("Erreur lors de la récupération des billets.", 0, $e);
         }
     }
 
@@ -75,8 +73,7 @@ class PostRepository
 
             return $post;
         } catch (\PDOException $e) {
-            error_log("Erreur lors de la récupération d'un billet : " . $e->getMessage(), 3, 'src/logs/error.log');
-            throw new \Exception("Erreur lors de la récupération d'un billet.");
+            throw new \Exception("Erreur lors de la récupération d'un billet.", 0, $e);
         }
     }
 
@@ -91,8 +88,7 @@ class PostRepository
                 'post_id' => $id,
             ]);
         } catch (\PDOException $e) {
-            error_log("Erreur lors de la mise à jour du billet : " . $e->getMessage(), 3, 'src/logs/error.log');
-            throw new \Exception("Erreur lors de la mise à jour du billet.");
+            throw new \Exception("Erreur lors de la mise à jour d'un billet.", 0, $e);
         }
     }
 
@@ -103,8 +99,7 @@ class PostRepository
             $statement = $this->connection->prepare($query);
             return $statement->execute(['id' => $id]);
         } catch (\PDOException $e) {
-            error_log("Erreur lors de la suppression du billet : " . $e->getMessage(), 3, 'src/logs/error.log');
-            throw new \Exception("Erreur lors de la suppression du billet.");
+            throw new \Exception("Erreur lors de la récupération d'un billet.", 0, $e);
         }
     }
 }

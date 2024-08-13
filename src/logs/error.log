@@ -4,21 +4,6 @@ La page ne peut pas s'afficher : identifiant non valide.
 La page ne peut pas s'afficher : identifiant non valide.
 La page ne peut pas s'afficher : identifiant non valide.
 La page ne peut pas s'afficher : identifiant non valide.
-La page ne peut pas s'afficher : identifiant non valide.
-La page ne peut pas s'afficher : identifiant non valide.
-Données du formulaire invalides.
-La page ne peut pas s'afficher : identifiant non valide.
-La page ne peut pas s'afficher : identifiant non valide.
-La page ne peut pas s'afficher : identifiant non valide.
-La page ne peut pas s'afficher : identifiant non valide.
-La page ne peut pas s'afficher : identifiant non valide.
-La page ne peut pas s'afficher : identifiant non valide.
-Erreur lors de la mise à jour d'un billet : SQLSTATE[HY093]: Invalid parameter number: parameter was not definedErreur lors de la mise à jour d'un billet.
-Erreur lors de la mise à jour d'un billet : SQLSTATE[HY093]: Invalid parameter number: parameter was not definedErreur lors de la mise à jour d'un billet.
-Erreur lors de la mise à jour d'un billet : SQLSTATE[HY093]: Invalid parameter number: parameter was not definedErreur lors de la mise à jour d'un billet.
-Erreur lors de la mise à jour du billet : SQLSTATE[HY093]: Invalid parameter number: parameter was not definedErreur lors de la mise à jour du billet.
-Erreur de connexion à la base de données : SQLSTATE[HY000] [2002] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refuséeImpossible de se connecter à la base de données. Veuillez réessayer plus tard.
-Erreur de connexion à la base de données : SQLSTATE[HY000] [2002] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refuséeImpossible de se connecter à la base de données. Veuillez réessayer plus tard.
 Erreur de connexion à la base de données : SQLSTATE[HY000] [2002] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refuséeImpossible de se connecter à la base de données. Veuillez réessayer plus tard.
 Erreur de connexion à la base de données : SQLSTATE[HY000] [2002] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refuséeImpossible de se connecter à la base de données. Veuillez réessayer plus tard.
 Erreur de connexion à la base de données : SQLSTATE[HY000] [2002] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refuséeImpossible de se connecter à la base de données. Veuillez réessayer plus tard.
@@ -30,14 +15,6 @@ La page ne peut pas s'afficher : identifiant non valide.
 Le mot de passe doit contenir au moins 3 caractères.
 Erreur lors de la récupération d'un billet : SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokensErreur lors de la récupération d'un billet.
 Erreur lors de la récupération d'un billet : SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokensErreur lors de la récupération d'un billet.
-Erreur lors de la récupération d'un billet : SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokensErreur lors de la récupération d'un billet.
-Erreur lors de la récupération d'un billet : SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokensErreur lors de la récupération d'un billet.
-Erreur lors de la récupération des billets : SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'AS french_format_creation_date
-                FROM post
-                IN...' at line 1Erreur lors de la récupération des billets.
-Erreur lors de la récupération des billets : SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'AS french_format_creation_date
-                FROM post
-                IN...' at line 1Erreur lors de la récupération des billets.
-Erreur lors de la récupération des billets : SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'AS french_format_creation_date
-                FROM post
-                IN...' at line 1Erreur lors de la récupération des billets.
+13.08.2024 22:47:18 : SQLSTATE[HY000] [2002] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée
+13.08.2024 23:13:19 : [Code 2002]SQLSTATE[HY000] [2002] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée
+14.08.2024 00:04:21 : [Code 2002] SQLSTATE[HY000] [2002] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée
