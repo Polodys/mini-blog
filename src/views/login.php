@@ -5,17 +5,23 @@
 <h1>Connexion</h1>
 
 <?php if (isset($errorMessage)): ?>
-    <p style="color: red"><?= htmlspecialchars($errorMessage) ?></p>
+    <div class="alert alert-danger" role="alert">
+        <?= htmlspecialchars($errorMessage) ?>
+    </div>
 <?php endif; ?>
 
 <form action="index.php?action=login" method="post">
-    <label for="identifier">Email ou Pseudo :</label>
-    <input type="text" id="identifier" name="identifier" required>
-
-    <label for="password">Mot de passe :</label>
-    <input type="password" id="password" name="password" required>
-
-    <button type="submit">Se connecter</button>
+    <div class="mb-3">
+        <label for="identifier" class="form-label">Email ou Pseudo :</label>
+        <input type="text" class="form-control" id="identifier" name="identifier" required>
+    </div>
+    <div class="mb-3">
+        <label for="password" class="form-label">Mot de passe :</label>
+        <input type="password" class="form-control" id="password" name="password" required>
+    </div>
+    <div class="text-center">
+        <button type="submit" class="btn btn-primary px-4 mt-4">Se connecter</button>
+    </div>
 </form>
 
 <?php $content = ob_get_clean(); ?>

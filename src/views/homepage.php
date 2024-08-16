@@ -2,20 +2,23 @@
 
 <?php ob_start(); ?>
 
-<h1>Liste des billets</h1>
-<hr>
+<div class="bg-light">
+    <h1>Liste des billets</h1>
+</div>
+<!-- <hr> -->
 
-<p>Cliquez sur un titre pour afficher le billet</p>
-<hr>
+<p class="py-3 mb-5 border-top border-bottom bg-white text-center">Cliquez sur un titre pour afficher le billet</p>
+<!-- <hr> -->
 
-<ul>
+<ul class="list-group list-group-flush bg-white">
     <?php foreach ($posts as $post): ?>
-        <li>
-            <a href="index.php?action=show-one-post&id=<?= htmlspecialchars($post->getId()); ?>">
+        <li class="list-group-item list-group-item-action text-center">
+            <a href="index.php?action=show-one-post&id=<?= htmlspecialchars($post->getId()); ?>" class="text-dark fw-semibold text-decoration-none d-block">
                 <?= htmlspecialchars($post->getTitle()) ?>
-            </a> <!-- Using htmlspecialchars for the id is a priori superfluous, because it's normally an integer from the database ; but I've chosen to systematically process all dynamic datas in this app --> 
-            (par <?= htmlspecialchars($post->getAuthorPseudonym()) ?> - <?= $post->getCreationDate() ?>)
+                <span class="text-muted fw-normal fst-italic"> (par <?= htmlspecialchars($post->getAuthorPseudonym()) ?> - <?= $post->getCreationDate() ?>)</span>
+            </a>
         </li>
+        <!-- Using htmlspecialchars for the id is a priori superfluous, because it's normally an integer from the database ; but I've chosen to systematically process all dynamic datas in this app -->
     <?php endforeach ?>
 </ul>
 

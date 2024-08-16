@@ -13,7 +13,7 @@ class Database
         if (self::$connection === null) {
             try {
                 self::$connection = new \PDO(
-                    'mysql:host=localhost;dbname=blog_ultra_simplifie;charset=utf8',
+                    'mysql:host=localhost;dbname=mini_blog;charset=utf8',
                     'root',
                     '',
                     [

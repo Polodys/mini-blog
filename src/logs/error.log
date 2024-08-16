@@ -18,3 +18,14 @@ Erreur lors de la récupération d'un billet : SQLSTATE[HY093]: Invalid paramete
 13.08.2024 22:47:18 : SQLSTATE[HY000] [2002] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée
 13.08.2024 23:13:19 : [Code 2002]SQLSTATE[HY000] [2002] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée
 14.08.2024 00:04:21 : [Code 2002] SQLSTATE[HY000] [2002] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée
+16.08.2024 07:49:24 : [Code 2002] SQLSTATE[HY000] [2002] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée
+16.08.2024 07:50:13 : [Code 2002] SQLSTATE[HY000] [2002] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée
+16.08.2024 07:51:31 : [Code 2002] SQLSTATE[HY000] [2002] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée
+16.08.2024 09:26:18 : [Code 500] Email invalide.
+16.08.2024 10:20:42 : [Code 500] Le mot de passe doit contenir au moins 3 caractères.
+16.08.2024 10:49:40 : [Code 2002] SQLSTATE[HY000] [2002] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée
+16.08.2024 10:49:55 : [Code 2002] SQLSTATE[HY000] [2002] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée
+16.08.2024 10:50:33 : [Code 2002] SQLSTATE[HY000] [2002] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée
+16.08.2024 10:50:48 : [Code 2002] SQLSTATE[HY000] [2002] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée
+16.08.2024 10:53:13 : [Code 2002] SQLSTATE[HY000] [2002] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée
+16.08.2024 10:53:17 : [Code 2002] SQLSTATE[HY000] [2002] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée
