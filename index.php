@@ -43,9 +43,6 @@ try {
             case 'logout':
                 (new AuthenticationController())->logout();
                 break;
-            case 'create-post-form':
-                (new PostController())->createPostForm();
-                break;
             case 'create-post':
                 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     (new PostController())->createPost($_POST);
