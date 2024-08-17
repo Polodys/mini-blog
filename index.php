@@ -27,47 +27,43 @@ try {
     if (isset($_GET['action'])) {
         switch ($_GET['action']) {
             case 'register':
-                $authenticationController = new AuthenticationController();
                 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                    $authenticationController->register($_POST);
+                    (new AuthenticationController())->register($_POST);
                 } else {
-                    $authenticationController->registerForm();
+                    (new AuthenticationController())->registerForm();
                 }
                 break;
             case 'login':
-                $authenticationController = new AuthenticationController();
                 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                    $authenticationController->login($_POST);
+                    (new AuthenticationController())->login($_POST);
                 } else {
-                    $authenticationController->loginForm();
+                    (new AuthenticationController())->loginForm();
                 }
                 break;
             case 'logout':
-                $authenticationController = new AuthenticationController();
-                $authenticationController->logout();
+                (new AuthenticationController())->logout();
                 break;
             case 'create-post-form':
                 (new PostController())->createPostForm();
                 break;
             case 'create-post':
-                $postController = new PostController();
                 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                    $postController->createPost($_POST);
+                    (new PostController())->createPost($_POST);
                 } else {
-                    $postController->createPostForm();
+                    (new PostController())->createPostForm();
                 }
                 break;
             case 'show-one-post':
                 $id = validateId($_GET['id']);
                 (new PostController())->showOnePost($id);
                 break;
-            case 'update-post-form':
-                $id = validateId($_GET['id']);
-                (new PostController())->updatePostForm($id);
-                break;
             case 'update-post':
                 $id = validateId($_GET['id']);
-                (new PostController())->updatePost($id, $_POST);
+                if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                    (new PostController())->updatePost($id, $_POST);
+                } else {
+                    (new PostController())->updatePostForm($id);
+                }
                 break;
             case 'delete-post':
                 $id = validateId($_GET['id']);
@@ -78,10 +74,8 @@ try {
                 break;
         }
     } else {
-        $postController = new PostController();
-        $postController->homepage();
+        (new PostController())->homepage();
     }
 } catch (Exception $e) {
-    $errorController = new ErrorController();
-    $errorController->errorHandler($e);
+    (new ErrorController())->errorHandler($e);
 }

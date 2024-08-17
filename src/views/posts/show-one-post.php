@@ -7,7 +7,7 @@
 
 <?php if (isset($_SESSION['authorPseudonym']) && (int) $_SESSION['authorId'] === (int) $post->getAuthorId()): ?>
     <div class="text-center">
-        <a href="index.php?action=update-post-form&id=<?= htmlspecialchars($post->getId()); ?>" class="btn btn-primary px-4 mx-3 mt-2 mb-5">Modifier</a>
+        <a href="index.php?action=update-post&id=<?= htmlspecialchars($post->getId()); ?>" class="btn btn-primary px-4 mx-3 mt-2 mb-5">Modifier</a>
         <button type="button" class="btn btn-danger px-4 mx-3 mt-2 mb-5" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal">Supprimer</button>
         <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
             <div class="modal-dialog">

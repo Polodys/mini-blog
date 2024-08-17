@@ -13,7 +13,7 @@
 
                     <?php if (isset($_SESSION['authorPseudonym'])): ?>
                         <li class="nav-item">
-                            <a class="nav-link" href="index.php?action=create-post-form">Nouvel article</a>
+                            <a class="nav-link" href="index.php?action=create-post">Nouvel article</a>
                         </li>
                     <?php endif; ?>
                 </ul>
