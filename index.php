@@ -23,56 +23,46 @@ function validateId(string $id)
     };
 }
 
+$routes = [
+    'GET' => [
+        'register' => [AuthenticationController::class, 'registerForm', false],
+        'login' => [AuthenticationController::class, 'loginForm', false],
+        'logout' => [AuthenticationController::class, 'logout', false],
+        'create-post' => [PostController::class, 'createPostForm', false],
+        'show-one-post' => [PostController::class, 'showOnePost', true], // $id
+        'update-post' => [PostController::class, 'updatePostForm', true], // $id
+        'delete-post' => [PostController::class, 'deletePost', true], // $id
+    ],
+    'POST' => [
+        'register' => [AuthenticationController::class, 'register', false], // $_POST (email, pseudonym, password)
+        'login' => [AuthenticationController::class, 'login', false], // $_POST (identifier, password)
+        'create-post' => [PostController::class, 'createPost', false], // $_POST (title, content)
+        'update-post' => [PostController::class, 'updatePost', true], // $id + $_POST (title, content)
+    ],
+];
+
 try {
-    if (isset($_GET['action'])) {
-        switch ($_GET['action']) {
-            case 'register':
-                if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                    (new AuthenticationController())->register($_POST);
-                } else {
-                    (new AuthenticationController())->registerForm();
-                }
-                break;
-            case 'login':
-                if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                    (new AuthenticationController())->login($_POST);
-                } else {
-                    (new AuthenticationController())->loginForm();
-                }
-                break;
-            case 'logout':
-                (new AuthenticationController())->logout();
-                break;
-            case 'create-post':
-                if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                    (new PostController())->createPost($_POST);
-                } else {
-                    (new PostController())->createPostForm();
-                }
-                break;
-            case 'show-one-post':
-                $id = validateId($_GET['id']);
-                (new PostController())->showOnePost($id);
-                break;
-            case 'update-post':
-                $id = validateId($_GET['id']);
-                if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                    (new PostController())->updatePost($id, $_POST);
-                } else {
-                    (new PostController())->updatePostForm($id);
-                }
-                break;
-            case 'delete-post':
-                $id = validateId($_GET['id']);
-                (new PostController())->deletePost($id);
-                break;
-            default:
-                throw new Exception('Page non trouvée', 404);
-                break;
+    $action = $_GET['action'] ?? '';
+    $requestMethod = $_SERVER['REQUEST_METHOD'];
+
+    if (isset($routes[$requestMethod][$action])) {
+        [$controllerClass, $method, $requiresId] = $routes[$requestMethod][$action];
+        $controller = new $controllerClass();
+        
+        // Validate ID if required
+        $id = $requiresId ? validateId($_GET['id'] ?? '') : null;
+        
+        // Call the appropriate method
+        if ($requestMethod === 'POST') {
+            $id !== null ? $controller->$method($id, $_POST) : $controller->$method($_POST);
+        } else { 
+            $id !== null ? $controller->$method($id) : $controller->$method();
         }
     } else {
+        // By default : to homepage, if no action is set or unknown action
         (new PostController())->homepage();
     }
 } catch (Exception $e) {
-    (new ErrorController())->errorHandler($e);
+    $errorController = new ErrorController();
+    $errorController->errorHandler($e);
 }
