@@ -13,7 +13,7 @@
 
                     <?php if (isset($_SESSION['authorPseudonym'])): ?>
                         <li class="nav-item">
-                            <a class="nav-link" href="index.php?action=create-post">Nouvel article</a>
+                            <a class="nav-link" href="index.php?execution=post/createPostForm">Nouvel article</a>
                         </li>
                     <?php endif; ?>
                 </ul>
@@ -23,14 +23,14 @@
                             <a class="nav-link disabled" aria-disabled="true">Bienvenue <?= htmlspecialchars($_SESSION['authorPseudonym']) ?></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="index.php?action=logout">Déconnexion</a>
+                            <a class="nav-link" href="index.php?execution=authentication/logout">Déconnexion</a>
                         </li>
                     <?php else: ?>
                         <li class="nav-item">
-                            <a class="nav-link" href="index.php?action=login">Connexion</a>
+                            <a class="nav-link" href="index.php?execution=authentication/loginForm">Connexion</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="index.php?action=register">Inscription</a>
+                            <a class="nav-link" href="index.php?execution=authentication/registerForm">Inscription</a>
                         </li>
                     <?php endif; ?>
                 </ul>

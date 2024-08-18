@@ -43,7 +43,7 @@ class PostController
             // 2- Creation of the new post
             $post = new Post(null, $title, $content, $authorId, $authorEmail, $authorPseudonym, null);
             $this->postRepository->createPost($post);
-            header('Location: index.php');
+            header('Location: index.php?execution=post/homepage');
             exit();
         } catch (\Exception $e) {
             $errorController = new ErrorController();
@@ -84,10 +84,12 @@ class PostController
         }
     }
 
-    public function updatePost(int $id, array $data)
+    public function updatePost(array $data)
     {
         try {
+            // echo "<pre>"; var_dump($data);die;
             // 1- Datas validation
+            $id = $data['id']; // ! ATTENTION : TODO : id à valider (vérifier notamment qu'il appartient bien à l'auteur spécifié)
             $title = trim($data['title']);
             $content = trim($data['content']);
             $post = $this->postRepository->getOnePost($id);
@@ -103,7 +105,9 @@ class PostController
 
             // 2- Updating of the post
             $post = $this->postRepository->updatePost($id, $title, $content);
-            header('Location: index.php?action=show-one-post&id=' . $id);
+            $url = 'index.php?execution=post/showOnePost/'.$id;
+            header('Location: ' . $url);
+            
             exit();
         } catch (\Exception $e) {
             $errorController = new ErrorController();
@@ -122,7 +126,7 @@ class PostController
 
             try {
                 $this->postRepository->deletePost($id);
-                header('Location: index.php');
+                header('Location: index.php?execution=post/homepage');
                 exit();
             } catch (\Exception $e) {
                 throw new \Exception("Erreur lors de la suppression du billet.");

@@ -4,7 +4,8 @@
 
 <h1>Modification du billet</h1>
 
-<form action="index.php?action=update-post&id=<?= htmlspecialchars($post->getId()) ?>" method="post">
+<form action="index.php?execution=post/updatePost" method="post">
+    <input type="hidden" name="id" value="<?= htmlspecialchars($post->getId()) ?>">
     <div class="mb-3">
         <label for="title" class="form-label">Titre :</label>
         <input type="text" class="form-control" name="title" id="title" value="<?= htmlspecialchars($post->getTitle()) ?>" required>

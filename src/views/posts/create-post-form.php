@@ -10,7 +10,7 @@
     </div>
 <?php endif; ?>
 
-<form action="index.php?action=create-post" method="post">
+<form action="index.php?execution=post/createPost" method="post">
     <div class="mb-3">
         <label for="title" class="form-label">Titre :</label>
         <input type="text" class="form-control" id="title" name="title" required>

@@ -15,7 +15,6 @@ use Application\Controllers\ErrorController;
 function validateId(string $id)
 {
     $id = isset($id) ? (int) $id : 0; 
-
     if ($id > 0) {
         return $id;
     } else {
@@ -23,44 +22,44 @@ function validateId(string $id)
     };
 }
 
-$routes = [
-    'GET' => [
-        'register' => [AuthenticationController::class, 'registerForm', false],
-        'login' => [AuthenticationController::class, 'loginForm', false],
-        'logout' => [AuthenticationController::class, 'logout', false],
-        'create-post' => [PostController::class, 'createPostForm', false],
-        'show-one-post' => [PostController::class, 'showOnePost', true], // $id
-        'update-post' => [PostController::class, 'updatePostForm', true], // $id
-        'delete-post' => [PostController::class, 'deletePost', true], // $id
-    ],
-    'POST' => [
-        'register' => [AuthenticationController::class, 'register', false], // $_POST (email, pseudonym, password)
-        'login' => [AuthenticationController::class, 'login', false], // $_POST (identifier, password)
-        'create-post' => [PostController::class, 'createPost', false], // $_POST (title, content)
-        'update-post' => [PostController::class, 'updatePost', true], // $id + $_POST (title, content)
-    ],
-];
-
 try {
-    $action = $_GET['action'] ?? '';
-    $requestMethod = $_SERVER['REQUEST_METHOD'];
+    // Extracting URL elements
+    $execution = $_GET['execution'] ?? 'post/homepage';
+    $array = explode('/', $execution);
 
-    if (isset($routes[$requestMethod][$action])) {
-        [$controllerClass, $method, $requiresId] = $routes[$requestMethod][$action];
-        $controller = new $controllerClass();
-        
-        // Validate ID if required
-        $id = $requiresId ? validateId($_GET['id'] ?? '') : null;
-        
-        // Call the appropriate method
-        if ($requestMethod === 'POST') {
-            $id !== null ? $controller->$method($id, $_POST) : $controller->$method($_POST);
-        } else { 
-            $id !== null ? $controller->$method($id) : $controller->$method();
+    $controllerName = ucfirst($array[0]) . 'Controller'; // ucfirst () = UpperCase for FIRST character 
+    $method = $array[1] ?? 'homepage';
+    $arg = $array[2] ?? null;
+
+    // Mapping the controller name to his class
+    $controllersMap = [
+        'PostController' => PostController::class,
+        'AuthenticationController' => AuthenticationController::class,
+    ];
+
+    if (!isset($controllersMap[$controllerName])) {
+        throw new Exception("Le contrôleur spécifié n'existe pas.");
+    }
+
+    $controllerClass = $controllersMap[$controllerName];
+    $controller = new $controllerClass();
+
+    // Id validation if necessary
+    if ($arg) {
+        $arg = validateId($arg);
+    }
+
+    // Calling the controller method
+    if (method_exists($controller, $method)) {
+        if ($arg !== null) {
+            $controller->$method($arg);
+        } elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $controller->$method($_POST);
+        } else {
+            $controller->$method();
         }
     } else {
-        // By default : to homepage, if no action is set or unknown action
-        (new PostController())->homepage();
+        throw new Exception("L'action spécifiée n'existe pas.");
     }
 } catch (Exception $e) {
     $errorController = new ErrorController();

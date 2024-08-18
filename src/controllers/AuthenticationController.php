@@ -31,14 +31,14 @@ class AuthenticationController
                 throw new \Exception("Le pseudonyme ne peut pas être vide.");
             }
 
-            // ATTENTION CI-DESSOUS : password fixé à 3 pour faciliter les tests : à remonter à 8 ou plus
+            // ! Warning : password set at 3 characters minimum to facilitate testing : to increase to 8 minimum (+ set RegEx)
             if (strlen($password) < 3) {
                 throw new \Exception("Le mot de passe doit contenir au moins 3 caractères.");
             }
-
+            
             // 2- Creation of a new author
             if ($this->authorRepository->createAuthor($email, $pseudonym, $password)) {
-                header('Location: index.php?action=login');
+                header('Location: index.php?execution=authentication/loginForm');
                 exit(); // I have to call exit, because setting header alone does not terminate the script execution (https://stackoverflow.com/questions/3553698/php-should-i-call-exit-after-calling-location-header)
             } else {
                 $errorMessage = "L'email ou le pseudo est déjà utilisé.";
@@ -73,7 +73,7 @@ class AuthenticationController
                 $_SESSION['authorId'] = $author->getId();
                 $_SESSION['authorEmail'] = $author->getEmail();
                 $_SESSION['authorPseudonym'] = $author->getPseudonym();
-                header('Location: index.php');
+                header('Location: index.php?execution=post/homepage');
                 exit();
             } else {
                 $errorMessage = "Identifiants incorrects.";
@@ -95,7 +95,7 @@ class AuthenticationController
         try {
             session_unset();
             session_destroy();
-            header('Location: index.php');
+            header('Location: index.php?execution=post/homepage');
             exit();
         } catch (\Exception $e) {
             $errorController = new ErrorController();

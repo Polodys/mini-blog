@@ -13,7 +13,7 @@
 <ul class="list-group list-group-flush bg-white">
     <?php foreach ($posts as $post): ?>
         <li class="list-group-item list-group-item-action text-center">
-            <a href="index.php?action=show-one-post&id=<?= htmlspecialchars($post->getId()); ?>" class="text-dark fw-semibold text-decoration-none d-block">
+            <a href="index.php?execution=post/showOnePost/<?= htmlspecialchars($post->getId()); ?>" class="text-dark fw-semibold text-decoration-none d-block">
                 <?= htmlspecialchars($post->getTitle()) ?>
                 <span class="text-muted fw-normal fst-italic"> (par <?= htmlspecialchars($post->getAuthorPseudonym()) ?> - <?= $post->getCreationDate() ?>)</span>
             </a>

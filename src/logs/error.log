@@ -33,3 +33,23 @@ Erreur lors de la récupération d'un billet : SQLSTATE[HY093]: Invalid paramete
 17.08.2024 10:08:44 : [Code 2006] SQLSTATE[HY000] [2006] MySQL server has gone away ; Détails de l'exception d'origine : PDO::__construct(): Error while reading greeting packet. PID=3828
 17.08.2024 10:08:44 : [Code 2006] SQLSTATE[HY000] [2006] MySQL server has gone away ; Détails de l'exception d'origine : PDO::__construct(): Error while reading greeting packet. PID=3828
 17.08.2024 10:08:44 : [Code 2006] SQLSTATE[HY000] [2006] MySQL server has gone away ; Détails de l'exception d'origine : PDO::__construct(): Error while reading greeting packet. PID=3828
+18.08.2024 10:56:26 : [Code 500] L'action spécifiée n'existe pas.
+18.08.2024 11:00:04 : [Code 500] Le contrôleur spécifié n'existe pas.
+18.08.2024 11:00:19 : [Code 500] Le contrôleur spécifié n'existe pas.
+18.08.2024 11:17:50 : [Code 500] L'action spécifiée n'existe pas.
+18.08.2024 11:20:51 : [Code 500] L'action spécifiée n'existe pas.
+18.08.2024 11:22:43 : [Code 500] L'action spécifiée n'existe pas.
+18.08.2024 11:23:11 : [Code 500] L'action spécifiée n'existe pas.
+18.08.2024 11:23:18 : [Code 500] L'action spécifiée n'existe pas.
+18.08.2024 11:24:01 : [Code 500] L'action spécifiée n'existe pas.
+18.08.2024 12:00:15 : [Code 500] Le contrôleur spécifié n'existe pas.
+18.08.2024 12:01:28 : [Code 500] Le contrôleur spécifié n'existe pas.
+18.08.2024 12:02:49 : [Code 500] Le contrôleur spécifié n'existe pas.
+18.08.2024 12:02:52 : [Code 500] La page ne peut pas s'afficher : identifiant non valide.
+18.08.2024 12:03:31 : [Code 500] La page ne peut pas s'afficher : identifiant non valide.
+18.08.2024 12:24:57 : [Code 500] La page ne peut pas s'afficher : identifiant non valide.
+18.08.2024 12:28:27 : [Code 500] La page ne peut pas s'afficher : identifiant non valide.
+18.08.2024 12:29:47 : [Code 500] La page ne peut pas s'afficher : identifiant non valide.
+18.08.2024 15:58:18 : [Code 500] La page ne peut pas s'afficher : identifiant non valide.
+18.08.2024 16:00:28 : [Code 500] La page ne peut pas s'afficher : identifiant non valide.
+18.08.2024 16:00:32 : [Code 500] La page ne peut pas s'afficher : identifiant non valide.

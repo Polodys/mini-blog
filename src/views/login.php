@@ -10,7 +10,7 @@
     </div>
 <?php endif; ?>
 
-<form action="index.php?action=login" method="post">
+<form action="index.php?execution=authentication/login" method="post">
     <div class="mb-3">
         <label for="identifier" class="form-label">Email ou Pseudo :</label>
         <input type="text" class="form-control" id="identifier" name="identifier" required>
