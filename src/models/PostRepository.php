@@ -55,6 +55,28 @@ class PostRepository
         }
     }
 
+    // ! NEW
+    public function getThisAuthorPosts($authorId): array
+    {
+        try {
+            $query = "SELECT post_id FROM post WHERE author_id = :author_id";
+            $statement = $this->connection->prepare($query);
+            $statement->execute(['author_id' => $authorId]);
+
+            $postIdsOfThisAuthor = [];
+            while ($row = $statement->fetch(\PDO::FETCH_ASSOC)) {
+                $postId = $row['post_id'];
+                $postIdsOfThisAuthor[] = $postId;
+            }
+
+            // echo "<pre>";var_dump($postIdsOfThisAuthor);die;
+            return $postIdsOfThisAuthor;
+
+        } catch (\PDOException $e) {
+            throw new \Exception("Erreur lors de la récupération des id des billets d'un auteur.", 0, $e);
+        }
+    }
+
     public function getOnePost(int $id): Post
     {
         try {

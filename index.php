@@ -12,16 +12,6 @@ use Application\Controllers\PostController;
 use Application\Controllers\AuthenticationController;
 use Application\Controllers\ErrorController;
 
-function validateId(string $id)
-{
-    $id = isset($id) ? (int) $id : 0; 
-    if ($id > 0) {
-        return $id;
-    } else {
-        throw new Exception("La page ne peut pas s'afficher : identifiant non valide.");
-    };
-}
-
 try {
     // Extracting URL elements
     $execution = $_GET['execution'] ?? 'post/homepage';
@@ -43,11 +33,6 @@ try {
 
     $controllerClass = $controllersMap[$controllerName];
     $controller = new $controllerClass();
-
-    // Id validation if necessary
-    if ($arg) {
-        $arg = validateId($arg);
-    }
 
     // Calling the controller method
     if (method_exists($controller, $method)) {

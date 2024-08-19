@@ -4,6 +4,7 @@ namespace Application\Controllers;
 
 require_once 'src/models/Post.php';
 require_once 'src/models/PostRepository.php';
+require_once 'src/lib/functions.php';
 
 use Application\Models\Post;
 use Application\Models\PostRepository;
@@ -65,6 +66,7 @@ class PostController
     public function showOnePost(int $id)
     {
         try {
+            $id = validateId($id);
             $post = $this->postRepository->getOnePost($id);
             require 'src/views/posts/show-one-post.php';
         } catch (\Exception $e) {
@@ -76,6 +78,7 @@ class PostController
     public function updatePostForm(int $id)
     {
         try {
+            $id = validateId($id);
             $post = $this->postRepository->getOnePost($id);
             require 'src/views/posts/update-post-form.php';
         } catch (\Exception $e) {
@@ -89,9 +92,17 @@ class PostController
         try {
             // echo "<pre>"; var_dump($data);die;
             // 1- Datas validation
-            $id = $data['id']; // ! ATTENTION : TODO : id à valider (vérifier notamment qu'il appartient bien à l'auteur spécifié)
+            $id = $data['id'];
+            $id = validateId($id); // ! ATTENTION : TODO : vérifier que l'id du billet appartient bien à l'auteur spécifié
             $title = trim($data['title']);
             $content = trim($data['content']);
+
+            // ! NEW
+            $postIdsOfThisAuthor = $this->postRepository->getThisAuthorPosts($_SESSION['authorId']);
+            if (!in_array($id, $postIdsOfThisAuthor)) {
+                throw new \Exception("Ce billet n'appartient pas à cet auteur.");
+            }
+
             $post = $this->postRepository->getOnePost($id);
 
             if (empty($title) || empty($content)) {
@@ -125,6 +136,7 @@ class PostController
             }
 
             try {
+                $id = validateId($id);
                 $this->postRepository->deletePost($id);
                 header('Location: index.php?execution=post/homepage');
                 exit();
