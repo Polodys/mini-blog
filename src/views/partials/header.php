@@ -1,3 +1,6 @@
+<!-- Header of the blog.
+Contains the navigation bar, with links to different sections of the site.
+Displays different options, depending on whether users are logged or not. -->
 <header class="bg-dark text-white py-3 mb-4">
     <div class="container-fluid">
         <nav class="navbar navbar-expand-lg" data-bs-theme="dark">
@@ -11,6 +14,7 @@
                         <a class="nav-link" href="index.php">Accueil</a>
                     </li>
 
+                    <!-- If the user is logged, displays link to a new post creation -->
                     <?php if (isset($_SESSION['authorPseudonym'])): ?>
                         <li class="nav-item">
                             <a class="nav-link" href="index.php?execution=post/createPostForm">Nouveau billet</a>
@@ -18,6 +22,7 @@
                     <?php endif; ?>
                 </ul>
                 <ul class="navbar-nav ms-auto">
+                    <!-- Displays links to connection informations, depending on whether users are logged or not -->
                     <?php if (isset($_SESSION['authorPseudonym'])): ?>
                         <li class="nav-item d-none d-lg-block">
                             <a class="nav-link disabled" aria-disabled="true">Bienvenue <?= htmlspecialchars($_SESSION['authorPseudonym']) ?></a>

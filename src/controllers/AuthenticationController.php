@@ -6,6 +6,9 @@ require_once 'src/models/AuthorRepository.php';
 
 use Application\Models\AuthorRepository;
 
+/**
+ * Controller that handles the authentication of the authors
+ */
 class AuthenticationController
 {
     private AuthorRepository $authorRepository;
@@ -15,6 +18,11 @@ class AuthenticationController
         $this->authorRepository = new AuthorRepository();
     }
 
+    /**
+     * Handles new author registration
+     *
+     * @param array $data Datas received from the registration form
+     */
     public function register(array $data)
     {
         try {
@@ -31,6 +39,7 @@ class AuthenticationController
                 throw new \Exception("Le pseudonyme ne peut pas être vide.");
             }
 
+            // checks if the password follows the right pattern
             $passwordPattern = '/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[&_\+\-\*\/\$£%@#!:;,?])[A-Za-z\d&_\+\-\*\/\$£%@#!:;,?]{8,25}$/';
 
             if (!preg_match($passwordPattern, $password)) {
@@ -39,8 +48,9 @@ class AuthenticationController
 
             // 2- Creation of a new author
             if ($this->authorRepository->createAuthor($email, $pseudonym, $password)) {
+                // redirects to login form when the registration is successfull
                 header('Location: index.php?execution=authentication/loginForm');
-                exit(); // I have to call exit, because setting header alone does not terminate the script execution (https://stackoverflow.com/questions/3553698/php-should-i-call-exit-after-calling-location-header)
+                exit(); // Ensure that the script stops after redirection
             } else {
                 $errorMessage = "L'email ou le pseudo est déjà utilisé.";
                 require 'src/views/register.php';
@@ -51,11 +61,20 @@ class AuthenticationController
         }
     }
 
+    /**
+     * Displays the registration form
+     */
     public function registerForm()
     {
         require 'src/views/register.php';
     }
 
+    /**
+     * Handles the connexion of an author
+     *
+     * @param array $data
+     * @return void
+     */
     public function login(array $data)
     {
         try {
@@ -71,6 +90,7 @@ class AuthenticationController
             $author = $this->authorRepository->getAuthorByEmailOrPseudonym($identifier);
 
             if ($author && password_verify($password, $author->getPassword())) {
+                // Stores author informations in the session when login is successfull
                 $_SESSION['authorId'] = $author->getId();
                 $_SESSION['authorEmail'] = $author->getEmail();
                 $_SESSION['authorPseudonym'] = $author->getPseudonym();
@@ -86,11 +106,19 @@ class AuthenticationController
         }
     }
 
+    /**
+     * Displays the author login form
+     */
     public function loginForm()
     {
         require 'src/views/login.php';
     }
 
+    /**
+     * Disconnects the logged author
+     *
+     * @return void
+     */
     public function logout()
     {
         try {

@@ -1,8 +1,15 @@
+/**
+ * Script to handle password validation and validation when submitting a form
+ */
 document.addEventListener('DOMContentLoaded', function() {
     passwordValidation();
     formSubmissionValidation();
 });
 
+/**
+ * Validates password in real time, according to the defined pattern.
+ * Displays a dynamic help message to inform the user whether the password is valid or not.
+ */
 function passwordValidation() {
     document.getElementById('password').addEventListener('input', function() {
         const password = this.value;
@@ -20,6 +27,11 @@ function passwordValidation() {
     })
 };
 
+/**
+ * Validates the form submission.
+ * If the password doesn't follow the defined pattern, prevents form submission and displays
+ * a modal alert.
+ */
 function formSubmissionValidation() {
     const form = document.querySelector('form');
     form.addEventListener('submit', function(event) {

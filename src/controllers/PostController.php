@@ -9,6 +9,9 @@ require_once 'src/lib/functions.php';
 use Application\Models\Post;
 use Application\Models\PostRepository;
 
+/**
+ * Controller that handles the operations on the posts
+ */
 class PostController
 {
     private PostRepository $postRepository;
@@ -18,11 +21,19 @@ class PostController
         $this->postRepository = new PostRepository();
     }
 
+    /**
+     * Displays the form for creating a new post
+     */
     public function createPostForm()
     {
         require 'src/views/posts/create-post-form.php';
     }
 
+    /**
+     * Creates a new post with the datas received
+     *
+     * @param array $data Datas received from the form
+     */
     public function createPost(array $data)
     {
         try {
@@ -52,6 +63,9 @@ class PostController
         }
     }
 
+    /**
+     * Displays homepage, with the list of all blogs
+     */
     public function homepage()
     {
         try {
@@ -63,6 +77,11 @@ class PostController
         }
     }
 
+    /**
+     * Displays the specified post
+     *
+     * @param integer $id The identifier of the post to display
+     */
     public function showOnePost(int $id)
     {
         try {
@@ -75,6 +94,11 @@ class PostController
         }
     }
 
+    /**
+     * Displays the form for updating a post
+     *
+     * @param integer $id The identifier of the post to update
+     */
     public function updatePostForm(int $id)
     {
         try {
@@ -87,29 +111,25 @@ class PostController
         }
     }
 
+    /**
+     * Updates a post with the new datas received
+     *
+     * @param array $data Datas received from the form
+     */
     public function updatePost(array $data)
     {
         try {
-            // echo "<pre>"; var_dump($data);die;
             // 1- Datas validation
-            $id = $data['id'];
-            $id = validateId($id); // ! ATTENTION : TODO : vérifier que l'id du billet appartient bien à l'auteur spécifié
+            $id = validateId($data['id']);
             $title = trim($data['title']);
             $content = trim($data['content']);
-
-            // ! NEW
-            $postIdsOfThisAuthor = $this->postRepository->getThisAuthorPosts($_SESSION['authorId']);
-            if (!in_array($id, $postIdsOfThisAuthor)) {
-                throw new \Exception("Ce billet n'appartient pas à cet auteur.");
-            }
-
-            $post = $this->postRepository->getOnePost($id);
 
             if (empty($title) || empty($content)) {
                 throw new \Exception("Le titre et le contenu ne peuvent pas être vides.");
             }
 
-            // Only the author of a post can modify it : here, an exception is thrown if the connected author is not the author of the post
+            // Checks if the connected author is the author of the post
+            $post = $this->postRepository->getOnePost($id);
             if ((int) $_SESSION['authorId'] !== (int) $post->getAuthorId()) {
                 throw new \Exception("Vous n'avez pas les droits pour modifier ce billet.");
             }
@@ -117,8 +137,7 @@ class PostController
             // 2- Updating of the post
             $post = $this->postRepository->updatePost($id, $title, $content);
             $url = 'index.php?execution=post/showOnePost/'.$id;
-            header('Location: ' . $url);
-            
+            header('Location: ' . $url);            
             exit();
         } catch (\Exception $e) {
             $errorController = new ErrorController();
@@ -126,10 +145,17 @@ class PostController
         }
     }
 
+    /**
+     * Deletes the specified post
+     *
+     * @param integer $id The identifier of the post to delete
+     */
     public function deletePost(int $id)
     {
-        try {
-            // Only the author of a post can delete it : here, an exception is thrown if the connected author is not the author of the post
+        try {            
+            $id = validateId($id);
+
+            // Checks if the connected author is the author of the post
             $post = $this->postRepository->getOnePost($id);
             if ((int) $_SESSION['authorId'] !== (int) $post->getAuthorId()) {
                 throw new \Exception("Vous n'avez pas les droits pour supprimer ce billet.");

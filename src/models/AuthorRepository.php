@@ -7,16 +7,32 @@ require_once 'src\models\Author.php';
 
 use Application\Lib\Database;
 
+/**
+ * Repository for authors management
+ */
 class AuthorRepository
 {
     private \PDO $connection;
 
+    /**
+     * AuthorRepository class constructor.
+     * Initializes the connection to the database.
+     */
     public function __construct()
     {
         $this->connection = Database::getConnection();
     }
 
-    // Is the email or pseudonym already taken ? (I don't want 2 authors to have the same email or pseudonym)
+    // Ckecks if the email or pseudonym is already taken (I don't want 2 authors to have the same email or pseudonym)
+    
+    /**
+     * Checks if the email or pseudonym is already taken
+     *
+     * @param string $email The email adress to check
+     * @param string $pseudonym The pseudonym to chekd
+     * @return boolean True if the email or the pseudonym is already taken, false if not
+     * @throws \Exception In case of database error
+     */
     public function isEmailOrPseudonymTaken(string $email, string $pseudonym): bool
     {
         try {
@@ -29,6 +45,15 @@ class AuthorRepository
         }
     }
 
+    /**
+     * Creates a new author in the database
+     *
+     * @param string $email The author's email address
+     * @param string $pseudonym The author's pseudonyym
+     * @param string $password The author's password (not yet hashed)
+     * @return boolean True if creation is a success, false if not
+     * @throws \Exception In case of database error
+     */
     public function createAuthor(string $email, string $pseudonym, string $password): bool
     {
         try {
@@ -49,6 +74,13 @@ class AuthorRepository
         }
     }
 
+    /**
+     * Gets an author by his email or his pseudonym.
+     *
+     * @param string $identifier The email or the pseudonym of the author
+     * @return Author|null The corresponding Author object, or null if it doesn't exists
+     * @throws \Exception In case of database error
+     */
     public function getAuthorByEmailOrPseudonym(string $identifier): ?Author
     {
         try {

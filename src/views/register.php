@@ -1,5 +1,7 @@
+<!-- Page title -->
 <?php $title = "Inscription"; ?>
 
+<!-- Start capturing main page content -->
 <?php ob_start(); ?>
 
 <h1>Inscription</h1>
@@ -49,6 +51,8 @@
     </div>
 </form>
 
+<!-- End of capture of main page content -->
 <?php $content = ob_get_clean(); ?>
 
+<!-- Inclusion of the page layout -->
 <?php require 'layout.php' ?>

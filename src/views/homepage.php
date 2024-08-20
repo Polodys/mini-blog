@@ -1,18 +1,20 @@
+<!-- Page title -->
 <?php $title = "Mon mini blog - Accueil"; ?>
 
+<!-- Start capturing main page content -->
 <?php ob_start(); ?>
 
 <div class="bg-light">
     <h1>Liste des billets</h1>
 </div>
-<!-- <hr> -->
 
 <p class="py-3 mb-5 border-top border-bottom bg-white text-center">Cliquez sur un titre pour afficher le billet</p>
-<!-- <hr> -->
 
+<!-- List of blog posts -->
 <ul class="list-group list-group-flush bg-white">
     <?php foreach ($posts as $post): ?>
         <li class="list-group-item list-group-item-action text-center">
+            <!-- Link to a specific post -->
             <a href="index.php?execution=post/showOnePost/<?= htmlspecialchars($post->getId()); ?>" class="text-dark fw-semibold text-decoration-none d-block">
                 <?= htmlspecialchars($post->getTitle()) ?>
                 <span class="text-muted fw-normal fst-italic"> (par <?= htmlspecialchars($post->getAuthorPseudonym()) ?> - <?= $post->getCreationDate() ?>)</span>
@@ -22,6 +24,8 @@
     <?php endforeach ?>
 </ul>
 
+<!-- End of capture of main page content -->
 <?php $content = ob_get_clean(); ?>
 
+<!-- Inclusion of the page layout -->
 <?php require 'layout.php' ?>

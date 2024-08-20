@@ -1,5 +1,7 @@
+<!-- Page title -->
 <?php $title = "Connexion"; ?>
 
+<!-- Start capturing main page content -->
 <?php ob_start(); ?>
 
 <h1>Connexion</h1>
@@ -24,6 +26,8 @@
     </div>
 </form>
 
+<!-- End of capture of main page content -->
 <?php $content = ob_get_clean(); ?>
 
+<!-- Inclusion of the page layout -->
 <?php require 'layout.php' ?>

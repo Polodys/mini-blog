@@ -4,10 +4,23 @@ namespace Application\Lib;
 
 use Application\Controllers\ErrorController;
 
+/**
+ * Database class
+ * Handles the connection to the database with PDO. Uses a singleton to ensure
+ * that only one connection is open.
+ */
 class Database
 {
+    /**
+     * @var \PDO|null PDO connection to the database
+     */
     private static ?\PDO $connection = null;
 
+    /**
+     * Gets the connection to the database - or sets a connection if none exists
+     *
+     * @return \PDO Connection to the database
+     */
     public static function getConnection(): \PDO
     {
         if (self::$connection === null) {

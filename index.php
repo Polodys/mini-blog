@@ -2,9 +2,11 @@
 
 session_start();
 
-// ini_set('display_errors', 0); // In production, choose 0 ; in developpement, choose 1 (enables errors to be displayed on screen)
+// Configuration of error reporting (in production, set 0 ; in developpement, set 1 - enables errors to be displayed on screen)
+// ini_set('display_errors', 0);
 
-require_once 'src/controllers/PostController.php'; // or require_once(__DIR__ . '/src/controllers/PostController.php');
+// Loading controllers
+require_once 'src/controllers/PostController.php';
 require_once 'src/controllers/AuthenticationController.php';
 require_once 'src/controllers/ErrorController.php';
 
@@ -13,20 +15,21 @@ use Application\Controllers\AuthenticationController;
 use Application\Controllers\ErrorController;
 
 try {
-    // Extracting URL elements
+    // Extracting and parsing URL elements to select the controller and method to execute
     $execution = $_GET['execution'] ?? 'post/homepage';
     $array = explode('/', $execution);
 
-    $controllerName = ucfirst($array[0]) . 'Controller'; // ucfirst () = UpperCase for FIRST character 
+    $controllerName = ucfirst($array[0]) . 'Controller'; // ucfirst () = UpperCase for FIRST character (used to match the controller class name)
     $method = $array[1] ?? 'homepage';
     $arg = $array[2] ?? null;
 
-    // Mapping the controller name to his class
+    // Mapping the controller name to its class
     $controllersMap = [
         'PostController' => PostController::class,
         'AuthenticationController' => AuthenticationController::class,
     ];
 
+    // Throws an exception if the controller does not exist
     if (!isset($controllersMap[$controllerName])) {
         throw new Exception("Le contrôleur spécifié n'existe pas.");
     }
@@ -34,7 +37,7 @@ try {
     $controllerClass = $controllersMap[$controllerName];
     $controller = new $controllerClass();
 
-    // Calling the controller method
+    // Calling the controller method (and passing arguments if necessary)
     if (method_exists($controller, $method)) {
         if ($arg !== null) {
             $controller->$method($arg);

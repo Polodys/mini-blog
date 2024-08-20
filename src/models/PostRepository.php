@@ -11,12 +11,23 @@ class PostRepository
 {
     private \PDO $connection;
 
+    /**
+     * PostRepository class constructor.
+     * Initializes the connection to the database.
+     */
     public function __construct()
     {
         $this->connection = Database::getConnection();
     }
 
-    public function createPost($post): bool
+    /**
+     * Inserts a new post in the database
+     *
+     * @param Post $post The post to insert
+     * @return boolean True if successfull insertion, false if not
+     * @throws \Exception In case of database error
+     */
+    public function createPost(Post $post): bool
     {
         try {
             $query = "INSERT INTO post (title, content, author_id, creation_date) VALUES (:title, :content, :author_id, NOW())";
@@ -31,10 +42,15 @@ class PostRepository
         }
     }
 
+    /**
+     * Gets all posts from the database
+     *
+     * @return array An array of Post objects.
+     * @throws \Exception In case of database error
+     */
     public function getAllPosts(): array
     {
         try {
-            // $query = "SELECT * FROM post";
             $query =
                 "SELECT post_id, title, content, post.author_id, email, pseudonym, DATE_FORMAT(creation_date, '%d/%m/%Y') AS french_format_creation_date
                 FROM post
@@ -55,32 +71,16 @@ class PostRepository
         }
     }
 
-    // ! NEW
-    public function getThisAuthorPosts($authorId): array
-    {
-        try {
-            $query = "SELECT post_id FROM post WHERE author_id = :author_id";
-            $statement = $this->connection->prepare($query);
-            $statement->execute(['author_id' => $authorId]);
-
-            $postIdsOfThisAuthor = [];
-            while ($row = $statement->fetch(\PDO::FETCH_ASSOC)) {
-                $postId = $row['post_id'];
-                $postIdsOfThisAuthor[] = $postId;
-            }
-
-            // echo "<pre>";var_dump($postIdsOfThisAuthor);die;
-            return $postIdsOfThisAuthor;
-
-        } catch (\PDOException $e) {
-            throw new \Exception("Erreur lors de la récupération des id des billets d'un auteur.", 0, $e);
-        }
-    }
-
+    /**
+     * Gets a specified post (by its id)
+     *
+     * @param integer $id The identifier of the post
+     * @return Post The specified post
+     * @throws \Exception In case of database error
+     */
     public function getOnePost(int $id): Post
     {
         try {
-            // $query = "SELECT * FROM post WHERE post_id = :post_id";
             $query =
                 "SELECT post_id, title, content, post.author_id, email, pseudonym, DATE_FORMAT(creation_date, '%d/%m/%Y') AS french_format_creation_date
                 FROM post
@@ -99,6 +99,15 @@ class PostRepository
         }
     }
 
+    /**
+     * Updates a post in the database.
+     *
+     * @param integer $id The id of the post to update
+     * @param string $title The new title of the post
+     * @param string $content The new content of the post
+     * @return boolean True if update is successfull, false if not
+     * @throws \Exception In case of database error
+     */
     public function updatePost(int $id, string $title, string $content): bool
     {
         try {
@@ -114,6 +123,12 @@ class PostRepository
         }
     }
 
+    /**
+     * Deletes a post from the database
+     *
+     * @param integer $id The identifier of the post to delete
+     * @return boolean True if deletion is successfull, false if not
+     */
     public function deletePost(int $id): bool
     {
         try {

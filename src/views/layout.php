@@ -10,12 +10,15 @@
 </head>
 
 <body class="d-flex bg-light flex-column min-vh-100">
+    <!-- Inclusion of page header -->
     <?php require 'partials/header.php'; ?>
 
+    <!-- Inclusion of page main content -->
     <main class="container my-5 flex-grow-1 bg-light">
         <?= $content ?>
     </main>
 
+    <!-- Inclusion of page footer -->
     <?php require 'partials/footer.php'; ?>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="./public/js/script.js"></script>

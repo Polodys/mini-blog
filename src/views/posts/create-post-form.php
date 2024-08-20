@@ -1,5 +1,7 @@
+<!-- Page title -->
 <?php $title = "Mon mini blog - Création d'un nouveau billet"; ?>
 
+<!-- Start capturing main page content -->
 <?php ob_start(); ?>
 
 <h1>Création d'un nouveau billet</h1>
@@ -10,6 +12,7 @@
     </div>
 <?php endif; ?>
 
+<!-- New post creation form -->
 <form action="index.php?execution=post/createPost" method="post">
     <div class="mb-3">
         <label for="title" class="form-label">Titre :</label>
@@ -24,6 +27,8 @@
     </div>
 </form>
 
+<!-- End of capture of main page content -->
 <?php $content = ob_get_clean(); ?>
 
+<!-- Inclusion of the page layout -->
 <?php require 'src/views/layout.php'; ?>
