@@ -24,7 +24,24 @@
         <label for="password" class="form-label" aria-describedby="passwordHelpBlock">Mot de passe :</label>
         <input type="password" class="form-control" id="password" name="password" required>
         <div id="passwordHelpBlock" class="form-text">
-            Votre mot de passe doit contenir au moins 8 caractères.
+            Votre mot de passe doit contenir entre 8 et 25 caractères, avec au moins une majuscule, une minuscule, un chiffre et un caractère spécial parmi ceux autorisés (& _ + - * / $ £ % @ # ! : ; , ?).
+        </div>
+    </div>
+    <!-- Modal alert for invalid password -->
+    <div class="modal fade" id="invalidPasswordModal" tabindex="-1" aria-labelledby="invalidPasswordModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="invalidPasswordModalLabel">Mot de passe invalide</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                Le mot de passe doit contenir entre 8 et 25 caractères, avec au moins une majuscule, une minuscule, un chiffre et un caractère spécial.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">OK</button>
+                </div>
+            </div>
         </div>
     </div>
     <div class="text-center">

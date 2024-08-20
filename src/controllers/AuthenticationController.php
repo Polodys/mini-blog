@@ -31,11 +31,12 @@ class AuthenticationController
                 throw new \Exception("Le pseudonyme ne peut pas être vide.");
             }
 
-            // ! Warning : password set at 3 characters minimum to facilitate testing : to increase to 8 minimum (+ set RegEx)
-            if (strlen($password) < 3) {
-                throw new \Exception("Le mot de passe doit contenir au moins 3 caractères.");
+            $passwordPattern = '/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[&_\+\-\*\/\$£%@#!:;,?])[A-Za-z\d&_\+\-\*\/\$£%@#!:;,?]{8,25}$/';
+
+            if (!preg_match($passwordPattern, $password)) {
+                throw new \Exception("Le mot de passe doit contenir entre 8 et 25 caractères, avec au moins une majuscule, une minuscule, un chiffre et un caractère spécial.");
             }
-            
+
             // 2- Creation of a new author
             if ($this->authorRepository->createAuthor($email, $pseudonym, $password)) {
                 header('Location: index.php?execution=authentication/loginForm');
