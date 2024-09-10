@@ -1,5 +1,5 @@
 <!-- Page title -->
-<?php $title = "Mon mini blog - Erreur"; ?>
+<?php $title = "Mini blog - Erreur"; ?>
 
 <!-- Start capturing main page content -->
 <?php ob_start(); ?>

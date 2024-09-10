@@ -1,5 +1,5 @@
 <!-- Page title -->
-<?php $title = "Mon mini blog - Création d'un nouveau billet"; ?>
+<?php $title = "Mini blog - Création d'un nouveau billet"; ?>
 
 <!-- Start capturing main page content -->
 <?php ob_start(); ?>

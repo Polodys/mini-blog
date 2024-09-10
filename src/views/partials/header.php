@@ -4,7 +4,7 @@ Displays different options, depending on whether users are logged or not. -->
 <header class="bg-dark text-white py-3 mb-4">
     <div class="container-fluid">
         <nav class="navbar navbar-expand-lg" data-bs-theme="dark">
-            <a class="navbar-brand mx-5" href="index.php">Mon mini blog</a>
+            <a class="navbar-brand mx-5" href="index.php">Mini blog</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>

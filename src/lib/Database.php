@@ -24,11 +24,14 @@ class Database
     public static function getConnection(): \PDO
     {
         if (self::$connection === null) {
+            // Load database configuration
+            $dbConfig = require_once __DIR__ . '/../../config/dbConfig.php';
+
             try {
                 self::$connection = new \PDO(
-                    'mysql:host=localhost;dbname=mini_blog;charset=utf8',
-                    'root',
-                    '',
+                    'mysql:host=' . $dbConfig['db_host'] . ';port=' . $dbConfig['db_port'] . ';dbname=' . $dbConfig['db_name'] . ';charset=utf8', 
+                    $dbConfig['db_user'],
+                    $dbConfig['db_password'],
                     [
                         \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
                         \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_ASSOC
